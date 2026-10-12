@@ -4,6 +4,7 @@ from tkinter import messagebox
 from tkinter import font
 from tkinter import filedialog
 import csv
+import os
 # from tkcalendar import DateEntry
 from tkinter import ttk
 import psycopg2
@@ -20,23 +21,32 @@ import datetime
 from scipy.special import comb
  
 
-# Informations de connexion
-host = "localhost"  # ou l'adresse IP du serveur
-port = "5432"       # port par défaut pour PostgreSQL
-dbname = "gestion_patient"
-user = "postgres"
-password = "onana44"
+# Configuration PostgreSQL via variables d'environnement.
+# Définir DB_HOST, DB_PORT, DB_NAME, DB_USER et DB_PASSWORD avant le lancement.
+host = os.getenv("DB_HOST", "localhost")
+port = os.getenv("DB_PORT", "5432")
+dbname = os.getenv("DB_NAME", "gestion_patient")
+user = os.getenv("DB_USER", "")
+password = os.getenv("DB_PASSWORD", "")
 
-def connecter_db():
-  try:
-    # Établir la connexion
-    connection = psycopg2.connect(
+def ouvrir_connexion_db():
+    """Ouvre une connexion PostgreSQL avec les paramètres locaux."""
+    if not user or not password:
+        raise RuntimeError(
+            "Configuration PostgreSQL manquante : définissez DB_USER et DB_PASSWORD."
+        )
+    return psycopg2.connect(
         host=host,
         port=port,
         dbname=dbname,
         user=user,
         password=password
     )
+
+def connecter_db():
+  try:
+    # Établir la connexion
+    connection = ouvrir_connexion_db()
 
     print("Connexion réussie à la base de données")
 
@@ -451,13 +461,7 @@ def open_gestion_des_patients():
         fill_treeview(tree1,result)   
 
     def insert_patient():
-         connection = psycopg2.connect(
-        host=host,
-        port=port,
-        dbname=dbname,
-        user=user,
-        password=password
-       )
+         connection = ouvrir_connexion_db()
          print("Connexion réussie à la base de données")
 
     # Créer un curseur pour exécuter des requêtes
@@ -469,13 +473,7 @@ def open_gestion_des_patients():
          fill_treeview(tree,connecter_db()) 
 
     def update_patient():
-         connection = psycopg2.connect(
-        host=host,
-        port=port,
-        dbname=dbname,
-        user=user,
-        password=password
-       )
+         connection = ouvrir_connexion_db()
          print("Connexion réussie à la base de données")
 
     # Créer un curseur pour exécuter des requêtes
@@ -502,13 +500,7 @@ def open_gestion_des_patients():
            fill_treeview(tree,connecter_db())      
 
     def update_consultation():
-          connection = psycopg2.connect(
-        host=host,
-        port=port,
-        dbname=dbname,
-        user=user,
-        password=password
-       )
+          connection = ouvrir_connexion_db()
           print("Connexion réussie à la base de données")
 
     # Créer un curseur pour exécuter des requêtes
@@ -523,13 +515,7 @@ def open_gestion_des_patients():
             fill_treeview(tree1,select_consult())   
 
     def delete_patient():
-         connection = psycopg2.connect(
-        host=host,
-        port=port,
-        dbname=dbname,
-        user=user,
-        password=password
-       )
+         connection = ouvrir_connexion_db()
          print("Connexion réussie à la base de données")
 
     # Créer un curseur pour exécuter des requêtes
@@ -541,13 +527,7 @@ def open_gestion_des_patients():
          fill_treeview(tree,connecter_db())
 
     def delete_consultation():
-         connection = psycopg2.connect(
-        host=host,
-        port=port,
-        dbname=dbname,
-        user=user,
-        password=password
-       )
+         connection = ouvrir_connexion_db()
          print("Connexion réussie à la base de données")
 
     # Créer un curseur pour exécuter des requêtes
@@ -559,13 +539,7 @@ def open_gestion_des_patients():
          fill_treeview(tree1,select_consult())  
 
     def insert_consultation():
-         connection = psycopg2.connect(
-        host=host,
-        port=port,
-        dbname=dbname,
-        user=user,
-        password=password
-       )
+         connection = ouvrir_connexion_db()
          print("Connexion réussie à la base de données")
 
     # Créer un curseur pour exécuter des requêtes
@@ -580,13 +554,7 @@ def open_gestion_des_patients():
          fill_treeview(tree1,select_consult()) 
 
     def select_consult():
-         connection = psycopg2.connect(
-        host=host,
-        port=port,
-        dbname=dbname,
-        user=user,
-        password=password
-       )
+         connection = ouvrir_connexion_db()
          print("Connexion réussie à la base de données")
 
     # Créer un curseur pour exécuter des requêtes
@@ -692,13 +660,7 @@ def open_gestion_des_patients():
     
     fill_treeview(tree,connecter_db()) 
     def search_patient(nom):
-          connection = psycopg2.connect(
-        host=host,
-        port=port,
-        dbname=dbname,
-        user=user,
-        password=password
-       )
+          connection = ouvrir_connexion_db()
           print("Connexion réussie à la base de données")
 
     # Créer un curseur pour exécuter des requêtes
@@ -712,13 +674,7 @@ def open_gestion_des_patients():
           return [tables,cursor]
     
     def search_consult(nom):
-          connection = psycopg2.connect(
-        host=host,
-        port=port,
-        dbname=dbname,
-        user=user,
-        password=password
-       )
+          connection = ouvrir_connexion_db()
           print("Connexion réussie à la base de données")
 
     # Créer un curseur pour exécuter des requêtes
