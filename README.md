@@ -2,7 +2,7 @@
 
 **Smart-Control** est une application de bureau Python avec interface graphique Tkinter, conçue autour de la gestion et de l'analyse de données de patients. Le dépôt contient une interface graphique, des fichiers CSV d'exemple, un logo et un document de confidentialité.
 
-> **Avertissement de sécurité :** le code et les fichiers du dépôt doivent être audités avant toute utilisation réelle. Le code consulté contient des paramètres de connexion à PostgreSQL écrits directement dans le fichier Python, et un CSV semble contenir des informations personnelles. N'utilisez pas ces données telles quelles en production. Supprimez les données personnelles du dépôt et faites tourner tout secret exposé.
+> **Avertissement de sécurité :** le code et les fichiers du dépôt doivent être audités avant toute utilisation réelle. Le code consulté contient des paramètres de connexion à PostgreSQL écrits directement dans le fichier Python, et un identifiant de connexion était codé en dur. Le jeu `patient_csv.csv` est déclaré comme fictif pour la démonstration ; ne le remplacez jamais par des données réelles de patients dans ce dépôt. Les identifiants déjà publiés doivent être renouvelés.
 
 ## Fonctionnalités repérées
 
@@ -32,7 +32,7 @@ Ces éléments sont décrits à partir du code présent dans le dépôt ; ils ne
 | `gui.py` | Application de bureau et logique de l'interface. |
 | `logo.png` | Logo utilisé dans l'interface. |
 | `contrat.txt` | Modèle de contrat de confidentialité. |
-| `patient_csv.csv` | Exemple de données tabulaires de patients ; à remplacer par des données synthétiques avant publication. |
+| `patient_csv.csv` | Jeu de données fictives destiné à la démonstration ; ne pas y ajouter de données réelles. |
 | `NH.csv`, `other.csv`, `valeur.csv` | Fichiers CSV utilisés pour les données ou les analyses. |
 
 ## Prérequis
@@ -83,7 +83,7 @@ Le code actuel attend une base PostgreSQL locale nommée `gestion_patient` et un
 Avant de lancer l'application :
 
 1. Créez et configurez la base de données et la table attendue.
-2. Déplacez les paramètres de connexion dans des variables d'environnement ou un fichier de configuration local non versionné.
+2. Configurez `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER` et `DB_PASSWORD` dans l'environnement avant de lancer l'application. Un modèle est fourni dans `.env.example` ; recopiez-le en `.env` si vous utilisez un outil qui charge ce fichier, puis gardez `.env` hors de Git.
 3. N'utilisez pas de compte PostgreSQL superutilisateur pour l'application ; créez un compte dédié avec les permissions minimales.
 4. Ne publiez jamais de mot de passe ou de données réelles de patients dans Git.
 
@@ -99,10 +99,10 @@ Le lancement effectif dépend de la disponibilité de PostgreSQL, de la configur
 
 ## Sécurité et confidentialité — actions prioritaires
 
-- **Révoquer et remplacer tout mot de passe ou secret qui a été commité**, même si le dépôt est ensuite rendu privé ou si le fichier est modifié.
+- **Révoquer et remplacer tout mot de passe ou secret qui a été commité**, même si le dépôt est ensuite rendu privé ou si le fichier est modifié. Le mot de passe précédemment présent dans `gui.py` doit être changé dans PostgreSQL.
 - Retirer du dépôt les données identifiantes et utiliser des données synthétiques pour les exemples.
 - Charger les secrets depuis l'environnement ; ne pas les coder en dur.
-- Ajouter un fichier `.gitignore` pour exclure les environnements virtuels, fichiers de configuration locaux, exports et jeux de données sensibles.
+- Le fichier `.gitignore` exclut les environnements virtuels et les fichiers de configuration locaux ; vérifiez aussi les exports et jeux de données avant chaque commit.
 - Définir des règles de contrôle d'accès, de sauvegarde et de conservation des données avant tout usage avec de vrais patients.
 - Faire vérifier le contrat de confidentialité par un professionnel compétent avant de le présenter comme un document juridique final.
 
