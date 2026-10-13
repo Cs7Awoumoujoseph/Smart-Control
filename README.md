@@ -2,7 +2,7 @@
 
 **Smart-Control** est une application de bureau Python avec interface graphique Tkinter, conçue autour de la gestion et de l'analyse de données de patients. Le dépôt contient une interface graphique, des fichiers CSV d'exemple, un logo et un document de confidentialité.
 
-> **Avertissement de sécurité :** le code et les fichiers du dépôt doivent être audités avant toute utilisation réelle. Le code consulté contient des paramètres de connexion à PostgreSQL écrits directement dans le fichier Python, et un identifiant de connexion était codé en dur. Le jeu `patient_csv.csv` est déclaré comme fictif pour la démonstration ; ne le remplacez jamais par des données réelles de patients dans ce dépôt. Les identifiants déjà publiés doivent être renouvelés.
+> **Statut : prototype pédagogique.** Le code actuel lit les paramètres PostgreSQL depuis des variables d’environnement. Le fichier `patient_csv.csv` contient des données synthétiques de démonstration ; n’ajoutez jamais de données réelles de patients à ce dépôt. Une ancienne révision contenait des paramètres de connexion codés en dur : si ces paramètres correspondent à un compte réel, son mot de passe doit être renouvelé. La modification du fichier courant ne retire pas cette ancienne révision de l’historique Git.
 
 ## Fonctionnalités repérées
 
@@ -99,7 +99,7 @@ Le lancement effectif dépend de la disponibilité de PostgreSQL, de la configur
 
 ## Sécurité et confidentialité — actions prioritaires
 
-- **Révoquer et remplacer tout mot de passe ou secret qui a été commité**, même si le dépôt est ensuite rendu privé ou si le fichier est modifié. Le mot de passe précédemment présent dans `gui.py` doit être changé dans PostgreSQL.
+- Si les paramètres de connexion présents dans une ancienne révision correspondent à un compte réel, renouveler ce mot de passe et vérifier les journaux d’accès.
 - Retirer du dépôt les données identifiantes et utiliser des données synthétiques pour les exemples.
 - Charger les secrets depuis l'environnement ; ne pas les coder en dur.
 - Le fichier `.gitignore` exclut les environnements virtuels et les fichiers de configuration locaux ; vérifiez aussi les exports et jeux de données avant chaque commit.
