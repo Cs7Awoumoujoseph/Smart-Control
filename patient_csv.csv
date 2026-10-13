@@ -1,4 +1,4 @@
-﻿id_client;nom_client;age;sexe;adresse;numero_telephone;id_consultation;nbre_consultation
-1;Awoumou Joseph;18;M;Logpom - Douala;683630983;1;1
-2;Ajolo chize;15;M;Makepe - Douala;697364158;2;1
-3;Kegne Marthe;25;F;Village - Douala;685962114;3;1
+id_client;nom_client;age;sexe;adresse;numero_telephone;id_consultation;nbre_consultation
+SYN-001;Patient fictif 001;35;F;Adresse fictive A;000000000;CONS-001;1
+SYN-002;Patient fictif 002;42;M;Adresse fictive B;000000000;CONS-002;2
+SYN-003;Patient fictif 003;28;F;Adresse fictive C;000000000;CONS-003;1
